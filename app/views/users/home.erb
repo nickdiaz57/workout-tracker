@@ -1,0 +1,16 @@
+<% if !@user.first_name.empty? %>
+    <h2>Welcome, <%= @user.first_name %>.</h2>
+<% else %>
+    <h2>Welcome, <%= @user.username %>.</h2>
+<% end %>
+
+<h3>My Workouts</h3>
+<% @user.workouts.each do |w| %>
+    <p><b><%= w.name %></b> - Score: <%= w.score %></p>
+<% end %>
+<br><br>
+<p><a href="/users/:id/add-workout">Post a New Workout</a></p> #<<------
+<p><a href="/users/">Edit Scores</a></p>
+<p><a href="/users/">Find a Workout</a></p>
+<p><a href="/users/profile">Edit my Profile</a></p>
+<p><a href="/users/logout">Log Out</a></p>

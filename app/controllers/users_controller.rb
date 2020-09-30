@@ -8,7 +8,7 @@ class UsersController < ApplicationController
     user = User.new(params)
     if user.save
       session[:user_id] = user.id
-      redirect "/users/account"
+      redirect "/users/#{user.id}"
     else
       redirect "/signup-failure"
     end
@@ -22,7 +22,7 @@ class UsersController < ApplicationController
     user = User.find_by(:username => params[:username])
     if user && user.authenticate(params[:password])
       session[:user_id] = user.id
-      redirect "/users/account"
+      redirect "/users/#{user.id}"
     else
       redirect "/login-failure"
     end
@@ -36,9 +36,22 @@ class UsersController < ApplicationController
     erb :"/users/login-failure"
   end
 
-  get "/users/account" do
+  get "/users/:id" do
     @user = User.find(session[:user_id])
-    erb :"/users/account"
+    erb :"/users/home"
+  end
+
+  get "/users/:id/add-workout" do
+    @user = User.find(session[:user_id])
+    erb :"/users/add-workout"
+  end
+
+  post "/users/workouts" do
+    user = User.find(session[:user_id])
+    workout = Workout.new(params[:workout])
+    user.workouts << workout
+    workout.save
+    redirect "/users/#{user.id}"
   end
 
 #   ################
