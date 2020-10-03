@@ -1,0 +1,16 @@
+<h2>Choose a workout to edit.</h2>
+
+<% @user.workouts.each do |w| %>
+    <form action="/users/edit-workout/<%= w.id %>" method="POST">
+    <input id="hidden" type="hidden" name="_method" value="PATCH">
+    <b>Name:</b> <input type="text" name="name" value="<%= w.name %>">
+    <b>Content:</b> <input type="text" name="content" value="<%= w.content %>">
+    <b>Your Score:</b> <input type="text" name="score" value="<%= w.score %>">
+    <input type="submit" id="Submit" value="Submit Changes">
+    </form>
+
+    <form action="/users/delete-workout/<%= w.id %>" method='POST'>
+    <input id="hidden" type="hidden" name="_method" value="DELETE">
+    <input type="submit" id="delete" value="Delete This Workout">
+    <br><br>
+<% end %>

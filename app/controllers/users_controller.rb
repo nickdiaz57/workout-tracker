@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   get "/users/login" do
-    erb :"/users/login"
+    erb :"/users/login"  #not working as intended?
   end
 
   post "/users/login" do
@@ -46,12 +46,47 @@ class UsersController < ApplicationController
     erb :"/users/add-workout"
   end
 
+  ############
+
   post "/users/workouts" do
     user = User.find(session[:user_id])
     workout = Workout.new(params[:workout])
     user.workouts << workout
     workout.save
     redirect "/users/#{user.id}"
+  end
+
+  get "/users/:id/edit-workout" do
+    @user = User.find(session[:user_id])
+    erb :"/users/edit-workout"
+  end
+
+  patch "/users/edit-workout/:id" do
+    Workout.update(params[:id], name: params[:name], content: params[:content], score: params[:score])
+    @user = User.find(session[:user_id])
+    redirect "/users/#{@user.id}"
+  end
+
+  get "/users/:id/profile" do
+    @user = User.find(session[:user_id])
+    erb :"/users/edit-profile"
+  end
+  
+  patch "/users/:id" do
+    User.update(params[:id], first_name: params[:first_name], last_name: params[:last_name], username: params[:username])
+    @user = User.find(params[:id])
+    redirect "/users/#{@user.id}"
+  end
+
+  delete "/users/delete-workout/:id" do
+    Workout.delete(params[:id])
+    @user = User.find(session[:user_id])
+    redirect "users/#{@user.id}"
+  end
+
+  get "/logout" do
+    logout
+    redirect "/"
   end
 
 #   ################
