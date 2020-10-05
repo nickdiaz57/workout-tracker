@@ -6,7 +6,7 @@ class WorkoutsController < ApplicationController
     erb :"/workouts/add-workout"
   end
 
-  post "/users/:id/workouts" do
+  post "/users/:id/workouts" do #add error handling for bad workout creation
     login_check
     user = current_user
     workout = Workout.new(params[:workout])
