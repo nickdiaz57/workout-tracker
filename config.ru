@@ -1,5 +1,4 @@
 require './config/environment'
-
 use Rack::MethodOverride
 
 if ActiveRecord::Migrator.needs_migration?
