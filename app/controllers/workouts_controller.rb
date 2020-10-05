@@ -3,16 +3,18 @@ class WorkoutsController < ApplicationController
   get "/users/:id/add-workout" do
     login_check
     @user = current_user
-    erb :"/workouts/add-workout"
+    erb :"/workouts/add-workout"  
   end
 
-  post "/users/:id/workouts" do #add error handling for bad workout creation
-    login_check
+  post "/users/:id/workouts" do
     user = current_user
     workout = Workout.new(params[:workout])
-    user.workouts << workout
-    workout.save
-    redirect "/users/#{user.id}"
+    if workout.save
+      user.workouts << workout
+      redirect "/users/#{user.id}"
+    else
+      redirect "/users/#{user.id}/add-workout"
+    end
   end
 
   get "/users/:id/edit-workout" do

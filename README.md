@@ -1,5 +1,3 @@
-<!--
-<h3>My Workouts</h3>
-<p><b><%= w.name %></b> - Score: <%= w.score %></p>
-<br><br>
--->
+# WorkoutTracker
+
+This program provides a simple web application for users to track their progress in named Crossfit workouts.  Users can create their own account and log in with a unique username and password.  Users can post workouts to their account and track the results and scores of their workouts.  Users can also edit their workouts after posting them, changing the name, content, and score of each workout, or delete the record of the workout from their account.
