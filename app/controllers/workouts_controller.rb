@@ -7,6 +7,7 @@ class WorkoutsController < ApplicationController
   end
 
   post "/users/:id/workouts" do
+    login_check
     user = current_user
     workout = Workout.new(params[:workout])
     if workout.save

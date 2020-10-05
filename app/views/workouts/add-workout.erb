@@ -1,21 +1,5 @@
 <h2>Post a workout, and record your results!</h2>
 
-<!--
-<form action="/users/workouts" method="POST">
-
-<h3><label for="workouts">Existing Workouts:</label></h3>
-
-<select name="workouts" id="workouts">
-    <% Workout.all.each do |w| %>
-        <option id="<%= w.id %>" value="<%= w.id %>"><%=w.name%></option>
-    <% end %>
-</select>
-<input type="text" id="score" placeholder="Your Score:">
-
-<input type="submit" value="Submit Workout">
-</form>
--->
-
 <form action="/users/<%= @user.id %>/workouts" method="POST">
 <input type="text" name="workout[name]" placeholder="Workout Name:">
 <input type="text" name="workout[content]" placeholder="Workout Description:">
