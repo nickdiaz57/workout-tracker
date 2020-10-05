@@ -15,7 +15,7 @@ class UsersController < ApplicationController
   end
 
   get "/users/login" do
-    erb :"/users/login"  #not working as intended?
+    erb :"/users/login"
   end
 
   post "/users/login" do
@@ -37,96 +37,26 @@ class UsersController < ApplicationController
   end
 
   get "/users/:id" do
-    @user = User.find(session[:user_id])
+    login_check
+    @user = current_user
     erb :"/users/home"
   end
 
-  get "/users/:id/add-workout" do
-    @user = User.find(session[:user_id])
-    erb :"/users/add-workout"
-  end
-
-  ############
-
-  post "/users/workouts" do
-    user = User.find(session[:user_id])
-    workout = Workout.new(params[:workout])
-    user.workouts << workout
-    workout.save
-    redirect "/users/#{user.id}"
-  end
-
-  get "/users/:id/edit-workout" do
-    @user = User.find(session[:user_id])
-    erb :"/users/edit-workout"
-  end
-
-  patch "/users/edit-workout/:id" do
-    Workout.update(params[:id], name: params[:name], content: params[:content], score: params[:score])
-    @user = User.find(session[:user_id])
-    redirect "/users/#{@user.id}"
-  end
-
   get "/users/:id/profile" do
-    @user = User.find(session[:user_id])
+    login_check
+    @user = current_user
     erb :"/users/edit-profile"
   end
   
   patch "/users/:id" do
+    login_check
     User.update(params[:id], first_name: params[:first_name], last_name: params[:last_name], username: params[:username])
     @user = User.find(params[:id])
     redirect "/users/#{@user.id}"
-  end
-
-  delete "/users/delete-workout/:id" do
-    Workout.delete(params[:id])
-    @user = User.find(session[:user_id])
-    redirect "users/#{@user.id}"
   end
 
   get "/logout" do
     logout
     redirect "/"
   end
-
-#   ################
-#   ################
-
-
-
-
-#   # GET: /users
-#   get "/users" do
-#     erb :"/users/index.html"
-#   end
-
-#   # GET: /users/new
-#   get "/users/new" do
-#     erb :"/users/new.html"
-#   end
-
-#   # POST: /users
-#   post "/users" do
-#     redirect "/users"
-#   end
-
-#   # GET: /users/5
-#   get "/users/:id" do
-#     erb :"/users/show.html"
-#   end
-
-#   # GET: /users/5/edit
-#   get "/users/:id/edit" do
-#     erb :"/users/edit.html"
-#   end
-
-#   # PATCH: /users/5
-#   patch "/users/:id" do
-#     redirect "/users/:id"
-#   end
-
-#   # DELETE: /users/5/delete
-#   delete "/users/:id/delete" do
-#     redirect "/users"
-#   end
 end

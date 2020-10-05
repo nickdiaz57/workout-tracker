@@ -6,11 +6,10 @@
 
 <h3>My Workouts</h3>
 <% @user.workouts.each do |w| %>
-    <p><b><%= w.name %></b> - Score: <%= w.score %></p>
+    <p><b><%= w.name %></b> [<%= w.content %>] - Score: <%= w.score %></p>
 <% end %>
 <br><br>
-<p><a href="/users/<%= @user.id %>/add-workout">Post a New Workout</a></p> <!-- <<------ get :id in url to reflect user id properly -->
+<p><a href="/users/<%= @user.id %>/add-workout">Post a New Workout</a></p>
 <p><a href="/users/<%= @user.id %>/edit-workout">Update Scores</a></p>
-<!-- <p><a href="/users/">Find a Workout</a></p> -->
 <p><a href="/users/<%= @user.id %>/profile">Edit my Profile</a></p>
-<p><a href="/logout">Log Out</a></p>   <!-- <<------ straight up doesnt work for no good reason -->
+<p><a href="/logout">Log Out</a></p>

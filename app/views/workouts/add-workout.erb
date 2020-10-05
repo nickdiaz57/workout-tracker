@@ -16,7 +16,7 @@
 </form>
 -->
 
-<form action="/users/workouts" method="POST">
+<form action="/users/<%= @user.id %>/workouts" method="POST">
 <input type="text" name="workout[name]" placeholder="Workout Name:">
 <input type="text" name="workout[content]" placeholder="Workout Description:">
 <input type="text" name="workout[score]" placeholder="Your Score:">

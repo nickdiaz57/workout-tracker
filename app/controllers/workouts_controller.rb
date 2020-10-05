@@ -1,37 +1,37 @@
 class WorkoutsController < ApplicationController
 
-  # GET: /workouts
-  get "/workouts" do
-    erb :"/workouts/index.html"
+  get "/users/:id/add-workout" do
+    login_check
+    @user = current_user
+    erb :"/workouts/add-workout"
   end
 
-  # GET: /workouts/new
-  get "/workouts/new" do
-    erb :"/workouts/new.html"
+  post "/users/:id/workouts" do
+    login_check
+    user = current_user
+    workout = Workout.new(params[:workout])
+    user.workouts << workout
+    workout.save
+    redirect "/users/#{user.id}"
   end
 
-  # POST: /workouts
-  post "/workouts" do
-    redirect "/workouts"
+  get "/users/:id/edit-workout" do
+    login_check
+    @user = current_user
+    erb :"/workouts/edit-workout"
   end
 
-  # GET: /workouts/5
-  get "/workouts/:id" do
-    erb :"/workouts/show.html"
+  patch "/users/workouts/:id" do
+    login_check
+    Workout.update(params[:id], name: params[:name], content: params[:content], score: params[:score])
+    @user = current_user
+    redirect "/users/#{@user.id}"
   end
-
-  # GET: /workouts/5/edit
-  get "/workouts/:id/edit" do
-    erb :"/workouts/edit.html"
-  end
-
-  # PATCH: /workouts/5
-  patch "/workouts/:id" do
-    redirect "/workouts/:id"
-  end
-
-  # DELETE: /workouts/5/delete
-  delete "/workouts/:id/delete" do
-    redirect "/workouts"
+  
+  delete "/users/workouts/:id" do
+    login_check
+    Workout.delete(params[:id])
+    @user = current_user
+    redirect "users/#{@user.id}"
   end
 end
